@@ -58,9 +58,8 @@ namespace WITAutomator
         /// <summary>
         /// loads the standard woodstock dbf files into an accdb format access database at the specified output path
         /// </summary>
-        /// <param name="dbf_dir"></param>
-        /// <param name="db_output_path"></param>
-        /// <returns></returns>
+        /// <param name="dbf_dir">directory containing the dbf files with standard names</param>
+        /// <param name="db_output_path">output path for a newly created accdb format access db with the dbf files copied into tables</param>
         public static void LoadDBFFiles(string dbf_dir, string db_output_path)
         {
             File.Copy(GetBlankDBPath(), db_output_path);
@@ -68,7 +67,8 @@ namespace WITAutomator
             using (OleDbConnection con = new OleDbConnection(connection_string))
             {
                 Dictionary<string, DataTable> woodstock_dbfs = ReadWoodStockDBFs(dbf_dir);
-
+                foreach (var kvp in woodstock_dbfs) {
+                }
             }
             
 

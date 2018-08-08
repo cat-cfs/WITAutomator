@@ -30,5 +30,28 @@ namespace WITAutomatorTest
             Assert.IsTrue(expected_columns.SequenceEqual(dbfColumnNames));
 
         }
+
+        [TestMethod]
+        public void TestReadWoodStockDBFs()
+        {
+            var result = DBFLoader.ReadWoodStockDBFs(".");
+
+            Assert.IsTrue(result.ContainsKey("Actions"));
+            Assert.IsTrue(result.ContainsKey("Areas"));
+            Assert.IsTrue(result.ContainsKey("Yeilds"));
+            Assert.IsTrue(result.ContainsKey("Themes"));
+            Assert.IsTrue(result.ContainsKey("Transitions"));
+            Assert.IsTrue(result.ContainsKey("Schedule"));
+
+
+
+        }
+
+        [TestMethod]
+        public void TestLoadDBFFiles()
+        {
+            DBFLoader.LoadDBFFiles(".", "test_output.accdb");
+
+        }
     }
 }
