@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WITAutomator;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using WITAutomator;
 namespace WITAutomatorTest
 {
     [TestClass]
@@ -25,8 +22,6 @@ namespace WITAutomatorTest
                 File.Delete(test_db_output);
             }
         }
-
-
 
         [TestMethod]
         public void TestLoadDBFFiles()

@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.IO;
 using System.Reflection;
-using System.Data;
 namespace WITAutomator
 {
     public class DBFLoader
     {
-
-
         public static string GetBlankDBPath()
         {
             string local_dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -26,7 +20,7 @@ namespace WITAutomator
         /// <param name="db_output_path">output path for a newly created accdb format access db with the dbf files copied into tables</param>
         /// <param name="woodstock_names">the woodstock tablename/filename pairs</param>
         /// <returns>The number of sucessfully loaded tables, or 0 if no table was loaded</returns>
-        public static int LoadDBFFiles(string dbf_dir, string db_output_path, List<WoodstockConstants.WoodStockTable> woodstock_names)
+        public static int LoadDBFFiles(string dbf_dir, string db_output_path, List<WoodStockTable> woodstock_names)
         {
             File.Copy(GetBlankDBPath(), db_output_path);
             int tablesLoaded = 0;
@@ -53,9 +47,6 @@ namespace WITAutomator
                 con.Close();
             }
             return tablesLoaded;
-
-
-
         }
     }
 }
