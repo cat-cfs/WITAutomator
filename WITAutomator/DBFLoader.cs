@@ -11,66 +11,50 @@ namespace WITAutomator
 {
     public class DBFLoader
     {
+
+
         public static string GetBlankDBPath()
         {
             string local_dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             return Path.Combine(local_dir, "blank.accdb");
         }
 
-        public static DataTable ReadDBF(string dbfpath)
-        {
-            dbfpath = Path.GetFullPath(dbfpath);
-            string dirname = Path.GetDirectoryName(dbfpath);
-            string filename = Path.GetFileName(dbfpath);
-            using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;" +
-                                        String.Format("Data Source={0};", dirname) +
-                                        "Extended Properties=dBase III")) {
-                OleDbCommand cmd = new OleDbCommand(String.Format("SELECT * FROM [{0}]", filename));
-                cmd.Connection = con;
-                OleDbDataAdapter adapter = new OleDbDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                return dt;
-            }
-        }
-
-        public static Dictionary<string, DataTable> ReadWoodStockDBFs(string dbf_dir)
-        {
-            //the standard woodstock table names/file names 
-            var woodstock_names = new Dictionary<string, string>()
-            {
-                { "Actions", "actions.dbf" },
-                { "Areas", "areas.dbf" },
-                { "Yeilds", "yields.dbf" },
-                { "Themes", "themes.dbf" },
-                { "Transitions", "trans.dbf" },
-                { "Schedule", "schedule.dbf" },
-            };
-
-            var output = new Dictionary<string, DataTable>();
-            foreach(var item in woodstock_names)
-            {
-                string path = Path.Combine(dbf_dir, item.Value);
-                output[item.Key] = ReadDBF(path);
-            }
-            return output;
-        }
         /// <summary>
         /// loads the standard woodstock dbf files into an accdb format access database at the specified output path
         /// </summary>
-        /// <param name="dbf_dir">directory containing the dbf files with standard names</param>
+        /// <param name="dbf_dir">directory containing the dbf files</param>
         /// <param name="db_output_path">output path for a newly created accdb format access db with the dbf files copied into tables</param>
-        public static void LoadDBFFiles(string dbf_dir, string db_output_path)
+        /// <param name="woodstock_names">the woodstock tablename/filename pairs</param>
+        /// <returns>The number of sucessfully loaded tables, or 0 if no table was loaded</returns>
+        public static int LoadDBFFiles(string dbf_dir, string db_output_path, List<WoodstockConstants.WoodStockTable> woodstock_names)
         {
             File.Copy(GetBlankDBPath(), db_output_path);
+            int tablesLoaded = 0;
             string connection_string = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + db_output_path + ";";
             using (OleDbConnection con = new OleDbConnection(connection_string))
             {
-                Dictionary<string, DataTable> woodstock_dbfs = ReadWoodStockDBFs(dbf_dir);
-                foreach (var kvp in woodstock_dbfs) {
+                con.Open();
+                foreach (var ws in woodstock_names) {
+
+                    dbf_dir = Path.GetFullPath(dbf_dir);
+                    if (!ws.FileExists(dbf_dir))
+                    {
+                        throw new ArgumentException(
+                            String.Format("specified file {0} does not exist",
+                                Path.Combine(dbf_dir, ws.FileName)));
+                    }
+                    string query = String.Format(
+                        "SELECT * INTO [{0}] FROM [dBase III;DATABASE={1}].[{2}]",
+                        ws.Name, dbf_dir, ws.FileName);
+                    OleDbCommand cmd = new OleDbCommand(query, con);
+                    cmd.ExecuteNonQuery();
+                    tablesLoaded++;
                 }
+                con.Close();
             }
-            
+            return tablesLoaded;
+
+
 
         }
     }
