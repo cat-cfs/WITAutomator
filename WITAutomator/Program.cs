@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json.Linq;
 
 namespace WITAutomator
 {
@@ -50,9 +50,29 @@ namespace WITAutomator
         }
         private static void Run(Options options)
         {
+            
+            JObject configObject = JObject.Parse(File.ReadAllText(options.ConfigurationPath));
+            string getValue(string key) => (string)configObject[key];
+
+            if (!Enum.TryParse(getValue("rounding_option"), out WoodStockImportTool.WoodStock.RoundingOption roundingOption))
+            {
+                throw new ArgumentException(
+                    String.Format("specified string {0} not convertable to woodstock rounding option",
+                    getValue("rounding_option")));
+            }
+            Run(options.SITConfigTemplatePath,
+                getValue("dbf_dir"),
+                getValue("cbm_project_output_path"),
+                getValue("woodstock_accdb_path"),
+                roundingOption,
+                getValue("species_theme_name"));
 
         }
-        private static void Run(string sitJsonConfigTemplatePath, string dbf_dir, string cbm_project_output_path, string woodstock_accdb_path, WoodStockImportTool.WoodStock.RoundingOption roundingOption, string species_theme_name)
+        private static void Run(string sitJsonConfigTemplatePath,
+            string dbf_dir, string cbm_project_output_path,
+            string woodstock_accdb_path,
+            WoodStockImportTool.WoodStock.RoundingOption roundingOption,
+            string species_theme_name)
         {
             var woodstock_tables = WoodstockConstants.StandardWoodTables;
             DBFLoader.LoadDBFFiles(dbf_dir, woodstock_accdb_path, woodstock_tables);
