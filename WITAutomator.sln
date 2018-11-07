@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WITAutomator", "WITAutomato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WITAutomatorTest", "WITAutomatorTest\WITAutomatorTest.csproj", "{CFBEB3F0-9C62-4E63-9AB6-6EA7B71198BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoodStockImportTool", "..\Toolbox\main\Unified\Pre\WoodStockImportTool\WoodStockImportTool.csproj", "{0D462B3B-898F-4CF4-BC95-42D057191D8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandardImportToolPlugin", "..\StandardImportToolPlugin\StandardImportToolPlugin.csproj", "{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,30 @@ Global
 		{CFBEB3F0-9C62-4E63-9AB6-6EA7B71198BD}.Release|x64.Build.0 = Release|x64
 		{CFBEB3F0-9C62-4E63-9AB6-6EA7B71198BD}.Release|x86.ActiveCfg = Release|Any CPU
 		{CFBEB3F0-9C62-4E63-9AB6-6EA7B71198BD}.Release|x86.Build.0 = Release|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Debug|x64.Build.0 = Debug|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Debug|x86.ActiveCfg = Debug|x86
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Debug|x86.Build.0 = Debug|x86
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Release|x64.ActiveCfg = Release|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Release|x64.Build.0 = Release|Any CPU
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Release|x86.ActiveCfg = Release|x86
+		{0D462B3B-898F-4CF4-BC95-42D057191D8B}.Release|x86.Build.0 = Release|x86
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Debug|x64.Build.0 = Debug|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Release|x64.ActiveCfg = Release|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Release|x64.Build.0 = Release|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{49FA9E52-1CC0-44FE-AEB3-2F446FAA55AE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -55,14 +55,14 @@
     <StartupObject>WITAutomator.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CBMSIT">
-      <HintPath>..\..\..\Program Files (x86)\Operational-Scale CBM-CFS3\CBMSIT.dll</HintPath>
-    </Reference>
     <Reference Include="Global">
       <HintPath>..\..\..\Program Files (x86)\Operational-Scale CBM-CFS3\Global.dll</HintPath>
     </Reference>
     <Reference Include="Interfaces">
       <HintPath>..\..\..\Program Files (x86)\Operational-Scale CBM-CFS3\Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="StringUtilities">
       <HintPath>..\..\..\Program Files (x86)\Operational-Scale CBM-CFS3\StringUtilities.dll</HintPath>
@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blank.accdb">
@@ -97,6 +98,10 @@
     <Folder Include="test\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\StandardImportToolPlugin\StandardImportToolPlugin.csproj">
+      <Project>{49fa9e52-1cc0-44fe-aeb3-2f446faa55ae}</Project>
+      <Name>StandardImportToolPlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Toolbox\main\Unified\Pre\WoodStockImportTool\WoodStockImportTool.csproj">
       <Project>{0d462b3b-898f-4cf4-bc95-42d057191d8b}</Project>
       <Name>WoodStockImportTool</Name>

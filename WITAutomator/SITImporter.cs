@@ -1,40 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CBMSIT.DBImport;
-using CBMSIT.UserData;
-using CBMSIT.Controllers;
+﻿using Newtonsoft.Json.Linq;
+using StandardImportToolPlugin;
+using System.IO;
 namespace WITAutomator
 {
     class SITImporter
     {
 
-        public void Import(string sit_db_path) {
-            
-            CBMDBObject db = new CBMDBObject(sit_db_path);
-            DBImporter importer = new DBImporter(db,
-                AgeClassTableName: "SIT_AgeClasses",
-                ClassifiersTableName: "SIT_Classifiers",
-                DisturbanceEventsTableName: "SIT_Events",
-                DisturbanceTypesTableName: "SIT_DisturbanceTypes",
-                EligibilityTableName: null,
-                InventoryTableName: "SIT_Inventory",
-                TransitionRulesTableName: "SIT_Transitions",
-                YieldTableName: "SIT_Yields",
-                AddMissingClassifierValues: false);
-            importer.Import();
-            UserDataSet ds = new UserDataSet();
-            ds.AgeClasses = importer.AgeClasses;
-            ds.Classifiers = importer.Classifiers;
-            ds.DisturbanceEvents = importer.DisturbanceEvents;
-            ds.DisturbanceTypes = importer.DisturbanceTypes;
-            ds.Inventories = importer.Inventories;
-            ds.TransitionRules = importer.TransitionRules;
-            ds.Yields = importer.Yields;
-
-            CBMSIT.ProjectCreation.CBMProjectWriter wr = new CBMSIT.ProjectCreation.CBMProjectWriter(ds,)
+        public void Import(string jsonConfigTemplatePath, string outputPath,
+            string inputPath) {
+            string json = "";
+            using (var s = File.OpenRead(jsonConfigTemplatePath))
+            using (StreamReader reader = new StreamReader(s))
+            {
+                json = reader.ReadToEnd();
+            }
+            JObject jsonObj = JObject.Parse(json);
+            jsonObj["output_path"] = outputPath;
+            jsonObj["import_config"]["path"] = inputPath;
+            var loader = new StandardImportToolPlugin.JsonConfigLoader();
+            Sitplugin sitplugin = loader.Load(jsonObj.ToString());
+            sitplugin.Import();
         }
     }
 }
