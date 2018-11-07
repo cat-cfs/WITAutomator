@@ -40,35 +40,39 @@ namespace WITAutomator
             log.Info("Startup");
             var options = new Options();
             var result = Parser.Default.ParseArguments<Options>(args);
-            result.WithParsed(a => { Run(a); });
-            string JsonConfigTemplatePath = @"C:\dev\WITAutomator\config_template.json";
-            string dbf_dir = @"C:\dev\WITAutomator\WITAutomatorTest";
-            string cbm_project_output_path = @"C:\dev\WITAutomator\cbm_project.mdb";
-            string woodstock_accdb_path = @"C:\dev\WITAutomator\woodstock.accdb";
-            var roundingOption = WoodStockImportTool.WoodStock.RoundingOption.MidPointRoundedDown;
-            string species_theme_name = null;
-
-            Run(JsonConfigTemplatePath, dbf_dir, cbm_project_output_path, woodstock_accdb_path, roundingOption, species_theme_name);
-
+            result.WithParsed(Run);
+            log.Info("Finished");
         }
         private static void Run(Options options)
         {
-            JObject configObject = JObject.Parse(File.ReadAllText(options.ConfigurationPath));
-            string getValue(string key) => (string)configObject[key];
-
-            if (!Enum.TryParse(getValue("rounding_option"), out WoodStockImportTool.WoodStock.RoundingOption roundingOption))
+            try
             {
-                throw new ArgumentException(
-                    String.Format("specified string {0} not convertable to woodstock rounding option",
-                    getValue("rounding_option")));
-            }
-            Run(options.SITConfigTemplatePath,
-                getValue("dbf_dir"),
-                getValue("cbm_project_output_path"),
-                getValue("woodstock_accdb_path"),
-                roundingOption,
-                getValue("species_theme_name"));
+                JObject configObject = JObject.Parse(File.ReadAllText(
+                    options.ConfigurationPath));
+                string getValue(string key) => (string)configObject[key];
 
+                if (!Enum.TryParse(getValue("rounding_option"),
+                    out WoodStockImportTool.WoodStock.RoundingOption roundingOption))
+                {
+                    throw new ArgumentException(
+                        String.Format(
+                            "specified string {0} not convertable to" +
+                            " woodstock rounding option",
+                            getValue("rounding_option")));
+                }
+                log.Info("Running with options:" +Environment.NewLine + configObject.ToString(Newtonsoft.Json.Formatting.Indented));
+                
+                Run(options.SITConfigTemplatePath,
+                    getValue("dbf_dir"),
+                    getValue("cbm_project_output_path"),
+                    getValue("woodstock_accdb_path"),
+                    roundingOption,
+                    getValue("species_theme_name"));
+            }
+            catch (Exception ex)
+            {
+                log.Error("application exception", ex);
+            }
         }
         private static void Run(string sitJsonConfigTemplatePath,
             string dbf_dir, string cbm_project_output_path,
@@ -76,10 +80,13 @@ namespace WITAutomator
             WoodStockImportTool.WoodStock.RoundingOption roundingOption,
             string species_theme_name)
         {
+            
             var woodstock_tables = WoodstockConstants.StandardWoodTables;
-            DBFLoader.LoadDBFFiles(dbf_dir, woodstock_accdb_path, woodstock_tables);
+            DBFLoader.LoadDBFFiles(dbf_dir, woodstock_accdb_path,
+                woodstock_tables);
             WITImporter importer = new WITImporter();
-            importer.Import(woodstock_accdb_path, woodstock_tables, species_theme_name, roundingOption);
+            importer.Import(woodstock_accdb_path, woodstock_tables,
+                species_theme_name, roundingOption);
             SITImporter sit_importer = new SITImporter();
             string cbmProjectPath = cbm_project_output_path;
             sit_importer.Import(sitJsonConfigTemplatePath,

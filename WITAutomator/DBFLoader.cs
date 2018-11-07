@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.IO;
@@ -7,6 +8,7 @@ namespace WITAutomator
 {
     public class DBFLoader
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(DBFLoader));
         public static string GetBlankDBPath()
         {
             string local_dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -22,6 +24,11 @@ namespace WITAutomator
         /// <returns>The number of sucessfully loaded tables, or 0 if no table was loaded</returns>
         public static int LoadDBFFiles(string dbf_dir, string db_output_path, List<WoodStockTable> woodstock_names)
         {
+            log.Info(String.Format("loading DBF files in dir: {0} into database: {1}", dbf_dir, db_output_path));
+            if (File.Exists(db_output_path))
+            {
+                File.Delete(db_output_path);
+            }
             File.Copy(GetBlankDBPath(), db_output_path);
             int tablesLoaded = 0;
             string connection_string = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + db_output_path + ";";
@@ -37,6 +44,7 @@ namespace WITAutomator
                             String.Format("specified file {0} does not exist",
                                 Path.Combine(dbf_dir, ws.FileName)));
                     }
+                    log.Info(ws.FileName);
                     string query = String.Format(
                         "SELECT * INTO [{0}] FROM [dBase III;DATABASE={1}].[{2}]",
                         ws.Name, dbf_dir, ws.FileName);

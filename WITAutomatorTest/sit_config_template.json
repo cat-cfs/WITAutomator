@@ -1,0 +1,65 @@
+{
+  "output_path": "",
+  "import_config": {
+    "path": "",
+    "ageclass_table_name": "SIT_AgeClasses",
+    "classifiers_table_name": "SIT_Classifiers",
+    "disturbance_events_table_name": "SIT_Events",
+    "disturbance_types_table_name": "SIT_DisturbanceTypes",
+    "inventory_table_name": "SIT_Inventory",
+    "transition_rules_table_name": "SIT_Transitions",
+    "yield_table_name": "SIT_Yields"
+  },
+  "mapping_config": {
+    "spatial_units": {
+      "mapping_mode": "SingleDefaultSpatialUnit",
+      "default_spuid": 42
+    },
+    "disturbance_types": {
+      "disturbance_type_mapping": [
+        {
+          "user_dist_type": "Wildfire",
+          "default_dist_type": "Wildfire"
+        },
+        {
+          "user_dist_type": "_DEATH",
+          "default_dist_type": "Wildfire"
+        },
+        {
+          "user_dist_type": "ACLEARCUT",
+          "default_dist_type": "Clear-cut with slash-burn"
+        },
+        {
+          "user_dist_type": "ARENEWBASC1",
+          "default_dist_type": "Clear-cut with slash-burn"
+        },
+        {
+          "user_dist_type": "ARENEWEXTEN",
+          "default_dist_type": "Clear-cut with slash-burn"
+        },
+        {
+          "user_dist_type": "ARENEWINTN1",
+          "default_dist_type": "Clear-cut with slash-burn"
+        }
+      ]
+    },
+    "species": {
+      "species_classifier": "1 Forest Management Unit",
+      "species_mapping": [
+        {
+          "user_species": "035  Black Spruce Forest",
+          "default_species": "Spruce"
+        },
+        {
+          "user_species": "175  Caribou Forest",
+          "default_species": "Spruce"
+        },
+        {
+          "user_species": "230  English River Forest",
+          "default_species": "Spruce"
+        }
+      ]
+    },
+    "nonforest": null
+  }
+}

@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using log4net;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using WoodStockImportTool;
 namespace WITAutomator
 {
-    class WITImporter
+    public class WITImporter
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(WITImporter));
         /// <summary>
         /// import the woodstock dataset
         /// </summary>
@@ -27,7 +29,11 @@ namespace WITAutomator
 
             ws.outputPath = @"C:\dev\WITAutomator\imported.accdb";
             ArrayList _inputTables = new ArrayList(inputTables.Select(a=>a.Name).ToList());
-            return ws.startImport(inputPath, roundingOption, _inputTables, false, species_theme_name);
+            log.Info("running Operational-Scale CBM-CFS3 Woodstock import tool.");
+            bool result = ws.startImport(inputPath, roundingOption, _inputTables, false, species_theme_name);
+            log.Info(string.Format("finished running Woodstock import tool. Results stored in database {0}",
+                inputPath));
+            return result;
         }
     }
 }
