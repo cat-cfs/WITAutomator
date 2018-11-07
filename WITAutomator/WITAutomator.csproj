@@ -97,6 +97,7 @@
     <Compile Include="WITImporter.cs" />
     <Compile Include="WoodstockConstants.cs" />
     <Compile Include="WoodstockTable.cs" />
+    <Compile Include="WorkingDirFileAppender.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

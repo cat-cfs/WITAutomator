@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using log4net.Config;
 
 namespace WITAutomator
 {
@@ -35,6 +36,8 @@ namespace WITAutomator
         }
         static void Main(string[] args)
         {
+            XmlConfigurator.Configure();
+            log.Info("Startup");
             var options = new Options();
             var result = Parser.Default.ParseArguments<Options>(args);
             result.WithParsed(a => { Run(a); });
@@ -50,7 +53,6 @@ namespace WITAutomator
         }
         private static void Run(Options options)
         {
-            
             JObject configObject = JObject.Parse(File.ReadAllText(options.ConfigurationPath));
             string getValue(string key) => (string)configObject[key];
 
