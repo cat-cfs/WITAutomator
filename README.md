@@ -8,9 +8,8 @@ Application built on top of Standard Import tool and Woodstock import tool to au
  
 ```<path_to_dir>\WITAutomator.exe -c config.json -s sit_config_template.json```
 
-### Arguments
 
-#### -c configuration file in json format
+### Argument 1: -c configuration file in json format
 
 Specifies the basic program options
 
@@ -36,7 +35,7 @@ Specifies the basic program options
     "species_theme_name": "1 Forest Management Unit"
 }
 ```
-#### -s standard import tool configuration template
+### Argument 2: -s standard import tool configuration template
 Specifies CBM-CFS3 Standard Import tool options. Some of the options **do not** need to be edited for use with the WIT
 
 **Items that _do not_ need to be edited**
